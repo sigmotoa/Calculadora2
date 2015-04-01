@@ -7,12 +7,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class calculadora2 extends ActionBarActivity {
 
    // @Override
     public String muestra="0";
+    public Double dato1=0.0;
+    public Double dato2=0.0;
+    public Boolean alerta=false;
+    public Byte operacion=0;
+
+
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculadora2);
@@ -33,6 +42,7 @@ public class calculadora2 extends ActionBarActivity {
         final Button men=(Button)findViewById(R.id.menos);
         final Button mas=(Button)findViewById(R.id.mas);
         final Button dot=(Button)findViewById(R.id.buttonpunto);
+        final Button equ=(Button)findViewById(R.id.igual);
 
         b0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,13 +137,99 @@ public class calculadora2 extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 muestra=null;
+                pantalla.setHint("Ingrese un numero");
                 pantalla.setText(muestra);
             }
         });
 
+        mas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(alerta.equals(true))
+                {
+                    alertar();
+                }
+                else {
+                    operacion=0;
+                dato1=Double.parseDouble(pantalla.getText().toString());
+                muestra=null;
+                pantalla.setText(muestra);
+                pantalla.setHint("Ingrese otro numero");
+                alerta=true;}
+
+            }
+        });
+        men.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { if(alerta.equals(true))
+            {
+                alertar();
+            }
+            else {
+                operacion=1;
+                dato1=Double.parseDouble(pantalla.getText().toString());
+                muestra=null;
+                pantalla.setText(muestra);
+                pantalla.setHint("Ingrese otro numero");
+                alerta=true;}
+
+            }
+        });
+        equ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(alerta.equals(true))
+                {
+                    alerta=false;
+
+                }
+                dato2=Double.parseDouble(pantalla.getText().toString());
+                switch (operacion)
+                {
+                    case 0:
+                        dato2=dato1+dato2;
+                        muestra=(dato2).toString();
+                        pantalla.setText(muestra);
+                        break;
+                    case 1:
+                        dato2=dato1-dato2;
+                        muestra=(dato2).toString();
+                        pantalla.setText(muestra);
+                        break;
+                    case 2:
+                        dato2=dato1*dato2;
+                        muestra=(dato2).toString();
+                        pantalla.setText(muestra);
+                        break;
+                    case 3:
+                        if (dato2==0.0)
+                        {
+                            cero();
+                        }
+                        else{
+                        dato2=dato1/dato2;
+                        muestra=(dato2).toString();
+                        pantalla.setText(muestra);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
+
     }
 
-
+    public void alertar()
+    {
+        Toast.makeText(this,"Pulsar = para ver resultado",Toast.LENGTH_SHORT).show();
+    }
+    public void cero()
+    {
+        Toast.makeText(this,"Imposible divivir por 0",Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
