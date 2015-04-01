@@ -47,12 +47,12 @@ public class calculadora2 extends ActionBarActivity {
         b0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(muestra=="0")
+                if(muestra.equals("0"))
                 {
                     muestra="0";
                     pantalla.setText("0");
                 }
-                if(muestra!="0") {
+                if(!muestra.equals("0")) {
                     muestra = pantalla.getText() + "0";
                     pantalla.setText(muestra);
                 }
